@@ -6,9 +6,8 @@ require_once "modelo/usuarioModelo.php";
 function index() {
     if (ehPost()) {
         extract($_POST);
-
-        $usuario = pegarUsuarioPorEmailSenha($login, $passwd);
-
+        $usuario = pegarUsuarioPorEmailSenha($email, $senha);
+        
         if (acessoLogar($usuario)) {
             alert("bem vindo" . $login);
             redirecionar("usuario");

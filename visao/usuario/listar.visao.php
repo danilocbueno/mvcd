@@ -1,4 +1,4 @@
-<h2>Listar usuários</h2>
+<h2>Listar usuários todos</h2>
 
 <table class="table">
     <thead>
@@ -22,7 +22,6 @@
     </tr>
     <?php endforeach; ?>
 </table>
-
 
 <a href="./usuario/adicionar" class="btn btn-primary">Adicionar novo usuario</a>
 

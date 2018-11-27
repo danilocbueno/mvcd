@@ -2,6 +2,7 @@
 
 require_once "modelo/usuarioModelo.php";
 
+/** admin, user */
 function index() {
     $dados["usuarios"] = pegarTodosUsuarios();
     exibir("usuario/listar", $dados);
@@ -22,7 +23,7 @@ function deletar($id) {
     redirecionar("usuario/index");
 }
 
-/** user */
+/** admin */
 function editar($id) {
     if (ehPost()) {
         $nome = $_POST["nome"];
