@@ -2,11 +2,6 @@
   <ul>
     <li><a href="./">Principal</a></li>
     <li><a href="./usuario">Usuario</a></li>
-	<?php if(acessoUsuarioEstaLogado()): ?>
-		<li>Bem vindo <?=acessoPegarUsuarioLogado()?></li>
-		<li><a href="./login/logout">Sair</a></li>
-	<?php else: ?>
-		<li><a href="./login">Entrar</a></li>
-	<?php endif; ?>
+    <li><a href="./?c=paginas">Páginas</a></li>
   </ul>
 </nav>

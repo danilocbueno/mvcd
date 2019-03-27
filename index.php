@@ -25,7 +25,7 @@ try {
     }
 
     //aqui serão duas situaões: utilizando a lib de autenticacao ou não
-
+    $released = true;
     if (defined('ACESSO')) {
         $role = getRoleOfControllerAction($nomeAcaoControlador);
 
@@ -33,7 +33,7 @@ try {
         $roles = explode(",", $role);
         $userRole = acessoPegarPapelDoUsuario();
         foreach ($roles as $role) {
-            
+
             $released = true;
             $role = trim($role);
             if (!empty($role) && $role !== $userRole) {
@@ -74,7 +74,7 @@ function getRoleOfControllerAction($nomeAcaoControlador) {
     return $role;
 }
 
-function tratarURL() {
+function tratarURLAmigavel() {
     $uri = explode("/", filter_input(INPUT_SERVER, 'REQUEST_URI')); //quebra a URL nos pedaços usando a barra como separador
     /* duas situações possíveis: 
      * 1. seusite.com/{controlador}/{acao}/{param1}/{param2}/..
@@ -97,6 +97,44 @@ function tratarURL() {
     $posicaoIndiceParametros = $indiceBaseURL + 2;
     $parametrosControlador = (count($uri) > $posicaoIndiceParametros) ? array_slice($uri, $posicaoIndiceParametros) : array(); //pega os parametros, se existir
 
+    $url = array(
+        "nomeControlador" => $nomeControlador,
+        "nomeAcaoControlador" => $nomeAcaoControlador,
+        "parametrosControlador" => $parametrosControlador
+    );
+
+    return $url;
+}
+
+function tratarURL() {
+    $uri = explode("/", filter_input(INPUT_SERVER, 'REQUEST_URI')); //quebra a URL nos pedaços usando a barra como separador
+    /* duas situações possíveis: 
+     * 1. seusite.com/{controlador}/{acao}/{param1}/{param2}/..
+     * 2. localhost/nomeAplicacao/{controlador}/{acao}/{param1}/{param2}/..
+     * TODO: verificar esse ponto.
+     */
+    $indiceBaseURL = 2;
+
+    if (empty($_GET) && CONTROLADOR_PADRAO) {
+        $nomeControlador = CONTROLADOR_PADRAO;
+    } else {
+        $nomeControlador = $_GET["c"]; //recupera o nome do controlador via URL    
+    }
+
+    $nomeControlador = "controlador/" . $nomeControlador . "Controlador.php";
+
+    //recupera a açao do controlador ou coloca o valor "index"como ação padrão do controlador
+    //$posicaoIndiceAcaoControlador = $indiceBaseURL + 1;
+    $nomeAcaoControlador = (isset($_GET['a']) and ! empty($_GET['a'])) ? $nomeAcaoControlador = $_GET['a'] : 'index'; //pega a acao
+    //recupear os parâmetros da URL, caso não existam retorna um array vazio
+    //$posicaoIndiceParametros = $indiceBaseURL + 2;
+
+    $parametrosControlador = array();
+    foreach ($_GET as $chave => $valor) {
+        if($chave !== "c" && $chave !== "a") {
+            $parametrosControlador[] = $valor;
+        }
+    }
     $url = array(
         "nomeControlador" => $nomeControlador,
         "nomeAcaoControlador" => $nomeAcaoControlador,
