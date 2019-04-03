@@ -2,6 +2,8 @@
 
 session_start();
 
+define('URL_BASE', pegarURLBaseAplicacao());
+
 //arquivos obrigatorios do framework
 require_once 'biblioteca/mysqli.php';
 require_once 'biblioteca/visao.php';
@@ -9,7 +11,7 @@ require_once 'biblioteca/uteis.php';
 
 require_once 'app.php'; //arquivo geral da aplicacao
 
-extract(tratarURL()); //cria as variaveis com nome do controlador, acao e parametros
+extract(tratarURLAmigavel()); //cria as variaveis com nome do controlador, acao e parametros
 //se o arquivo correspondente ao controlador não existir mata a aplicação
 if (!file_exists($nomeControlador)) {
     die("Nao foi encontrado o arquivo: '$nomeControlador' para enviar a solicitacao!");
@@ -131,7 +133,7 @@ function tratarURL() {
 
     $parametrosControlador = array();
     foreach ($_GET as $chave => $valor) {
-        if($chave !== "c" && $chave !== "a") {
+        if ($chave !== "c" && $chave !== "a") {
             $parametrosControlador[] = $valor;
         }
     }
@@ -141,5 +143,20 @@ function tratarURL() {
         "parametrosControlador" => $parametrosControlador
     );
 
+    return $url;
+}
+
+function pegarURLBaseAplicacao() {
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+    $port = ($_SERVER['SERVER_PORT'] == 80 || $_SERVER['SERVER_PORT'] == 443) ? "" : ":" . $_SERVER['SERVER_PORT'];
+    $dirName = basename(dirname(__FILE__));
+
+    if ($dirName == "public_html") {
+        $dirName = "";
+    } else {
+        $dirName = "/$dirName/";
+    }
+
+    $url = $protocol . "://" . $_SERVER['SERVER_NAME'] . $port . $dirName;
     return $url;
 }
