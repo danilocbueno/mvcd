@@ -25,6 +25,7 @@ try {
     }
 
     //aqui serão duas situaões: utilizando a lib de autenticacao ou não
+    $released = true;
 
     if (defined('ACESSO')) {
         $role = getRoleOfControllerAction($nomeAcaoControlador);
@@ -81,7 +82,17 @@ function tratarURL() {
      * 2. localhost/nomeAplicacao/{controlador}/{acao}/{param1}/{param2}/..
      * TODO: verificar esse ponto.
      */
-    $indiceBaseURL = 2;
+    
+    $urlBase = URL_BASE;
+    $urlDividida = explode("://", $urlBase);
+    $urlRestante = explode("/", $urlDividida[1]);
+
+    if(count($urlRestante) > 0 && empty($urlRestante[1])) {
+        $indiceBaseURL = 1; //prod
+    } else {
+        $indiceBaseURL = 2; //local
+    }
+
     $nomeControlador = $uri[$indiceBaseURL]; //recupera o nome do controlador via URL
 
     if (!$nomeControlador && CONTROLADOR_PADRAO) {

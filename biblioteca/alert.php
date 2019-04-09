@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Para utilizar a biblioteca você deve fazer a chamada da função alertComponentRender() seu arquivo `template.php`. 
+ */
+
 function alertInit() {
     if (!isset($_SESSION["alert"])) {
         $_SESSION["alert"] = array();
