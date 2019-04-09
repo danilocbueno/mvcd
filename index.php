@@ -21,7 +21,7 @@ require_once $nomeControlador;
 try {
     //verifica se NÃO existe a função correspondente a ação no controlador!
     if (!is_callable($nomeAcaoControlador)) {
-        die('Nao foi encontrado a funcao correspondente a acao "' . $nomeAcaoControlador . '" do controlador "' . $controllerFileName . '"');
+        die('Não foi encontrada a <code>função</code> correspondente a ação <code>"' . $nomeAcaoControlador . '"</code> do controlador <code>"' . $nomeControlador . '"</code>');
     }
 
     //aqui serão duas situaões: utilizando a lib de autenticacao ou não
@@ -41,7 +41,7 @@ try {
                 // echo "role=$role  userrole=$userRole <BR><BR>";
                 //regra nao eh igual a encontrada na action do controlador
                 $released = false;
-                $authMsg = "Nao tem permissao para acessar essa funcionalidade";
+                $authMsg = "O usuário não possui permissão para acessar essa funcionalidade";
             }
             if (empty($role) && !acessoUsuarioEstaLogado()) {
                 $released = false;

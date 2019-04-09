@@ -42,11 +42,17 @@ A estrutura do projeto é ilustrada abaixo:
     ├── index.php
     └── readme.md
 
-O framework utiliza o padrão arquitetural MVC, logo sua estrutura está baseada neste padrão apresentando os três principais objetos da arquitetura, a pasta `modelo`, `controlador` e `visao`. 
+O framework utiliza o padrão arquitetural MVC, logo sua estrutura básica apresenta os três principais objetos da arquitetura, representados pelas pastas `modelo`, `controlador` e `visao`. 
 
 ## Rotas
-As rotas sao convencionadas a seguir o padrao:
-`http://localhost/seuprojeto/<CONTROLADOR>/<ACAO>`
+As rotas sao convencionadas a seguir o padrão:
+`http://localhost/<PASTA_PROJETO>/<CONTROLADOR>/<ACAO>`
+
+`<PASTA_PROJETO>`: o nome da pasta em que os arquivos estão, por padrão o nome que está se você baixar os arquivos é `mvcd-master`. Recomenda-se que você troque essa nomenclatura para uma que identifique o seu projeto.
+
+`<CONTROLADOR>`: nome do controlador que atenderá essa requisição. Cada controlador é representado por um arquivo com a convenção do nome em camelCase no padrão: `<nomeControlador>**Controlador.php**` exemplo: `usuarioControlador.php`.
+
+`<ACAO>`: ação do controlador que atenderá a requisição em questão. Se o valor for vazio, ou seja, chamar apenas com o nome do controlador, o framework espera por padrão uma ação chamada `index`. As ações
 
 O noopmvc utiliza o padrao Front Controller, isso significa que todas as requisições (uma requisicao é qualquer chamada para algum recurso do seu site - uma URL) irão ser atendidas pelo mesmo arquivo, no caso o arquivo `index.php`. Ele será o responsável por tratar essa requisição e repassar para o controlador específico que vai lidar com aquela requisição. Voce não deve alterar o arquivo `index.php` a menos que tenha certeza absoluta do que esta fazendo.
 
