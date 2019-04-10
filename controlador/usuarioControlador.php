@@ -2,7 +2,6 @@
 
 require_once "modelo/usuarioModelo.php";
 
-/** admin, user */
 function index() {
     $dados["usuarios"] = pegarTodosUsuarios();
     exibir("usuario/listar", $dados);
@@ -10,7 +9,9 @@ function index() {
 
 function adicionar() {
     if (ehPost()) {
-        extract($_POST);
+        $nome = $_POST["usuario"];
+        $email = $_POST["email"];
+        $senha = $_POST["senha"];
         alert(adicionarUsuario($nome, $email, $senha));
         redirecionar("usuario/index");
     } else {
@@ -23,7 +24,6 @@ function deletar($id) {
     redirecionar("usuario/index");
 }
 
-/** admin */
 function editar($id) {
     if (ehPost()) {
         $nome = $_POST["nome"];
@@ -31,14 +31,12 @@ function editar($id) {
         alert(editarUsuario($id, $nome, $email));
         redirecionar("usuario/index");
     } else {
-        $dados['usuario'] = pegarUsuarioPorId($id);
-        $dados['acao'] = "./usuario/editar/$id";
+        $dados["usuario"] = pegarUsuarioPorId($id);
         exibir("usuario/formulario", $dados);
     }
 }
 
-/** admin */
 function visualizar($id) {
-    $dados['usuario'] = pegarUsuarioPorId($id);
+    $dados["usuario"] = pegarUsuarioPorId($id);
     exibir("usuario/visualizar", $dados);
 }
