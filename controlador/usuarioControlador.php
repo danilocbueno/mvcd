@@ -2,21 +2,21 @@
 
 require_once "modelo/usuarioModelo.php";
 
-function index() {
+function listarTodos() {
     $dados["usuarios"] = pegarTodosUsuarios();
     exibir("usuario/listar", $dados);
 }
 
-function adicionar() {
-    if (ehPost()) {
-        $nome = $_POST["usuario"];
-        $email = $_POST["email"];
-        $senha = $_POST["senha"];
-        alert(adicionarUsuario($nome, $email, $senha));
-        redirecionar("usuario/index");
-    } else {
-        exibir("usuario/formulario");
-    }
+function inserir() {
+    exibir("usuario/formulario");
+}
+
+function salvar() {
+    $nome = $_POST["usuario"];
+    $email = $_POST["email"];
+    $senha = $_POST["senha"];
+    alert(adicionarUsuario($nome, $email, $senha));
+    redirecionar("usuario/index");
 }
 
 function deletar($id) {
@@ -25,15 +25,15 @@ function deletar($id) {
 }
 
 function editar($id) {
-    if (ehPost()) {
-        $nome = $_POST["nome"];
-        $email = $_POST["email"];
-        alert(editarUsuario($id, $nome, $email));
-        redirecionar("usuario/index");
-    } else {
-        $dados["usuario"] = pegarUsuarioPorId($id);
-        exibir("usuario/formulario", $dados);
-    }
+    $dados["usuario"] = pegarUsuarioPorId($id);
+    exibir("usuario/formulario", $dados);
+}
+
+function atualizar($id) {
+    $nome = $_POST["nome"];
+    $email = $_POST["email"];
+    alert(editarUsuario($id, $nome, $email));
+    redirecionar("usuario/index");
 }
 
 function visualizar($id) {

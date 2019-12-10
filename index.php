@@ -2,6 +2,12 @@
 
 session_start();
 
+//lidar com os erros!
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 //arquivos obrigatorios do framework
 require_once 'biblioteca/mysqli.php';
 require_once 'biblioteca/visao.php';
@@ -58,7 +64,17 @@ try {
     }
     if ($released) {
         //echo "acesso permitido";
-        call_user_func_array($nomeAcaoControlador, $parametrosControlador); //chama a funcao passando parametros   
+        $retorno = call_user_func_array($nomeAcaoControlador, $parametrosControlador); //chama a funcao passando parametros   
+        
+        if($retorno === null) {
+            die("ERRO: Você precisa retornar uma visão!");
+        }
+
+        extract($retorno);
+
+        require_once("visao/template.php");
+
+        
     } else {
         //echo "acesso negado";
         alert($authMsg, "warning");
@@ -87,12 +103,13 @@ function tratarURL() {
     $urlDividida = explode("://", $urlBase);
     $urlRestante = explode("/", $urlDividida[1]);
 
+
+
     if(count($urlRestante) > 0 && empty($urlRestante[1])) {
         $indiceBaseURL = 1; //prod
     } else {
         $indiceBaseURL = 2; //local
     }
-
     $nomeControlador = $uri[$indiceBaseURL]; //recupera o nome do controlador via URL
 
     if (!$nomeControlador && CONTROLADOR_PADRAO) {
