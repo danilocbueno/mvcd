@@ -1,18 +1,13 @@
-DROP DATABASE mvcd;
-CREATE DATABASE mvcd;
+CREATE TABLE usuario(
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  nome VARCHAR(100) NOT NULL,
+  senha VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  --papéis: 'user' e 'admin'
+  papel VARCHAR(100) NOT NULL DEFAULT 'user'
+);
 
-USE mvcd;
-
-CREATE TABLE IF NOT EXISTS `mvcd`.`usuario` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(100) NOT NULL,
-  `senha` VARCHAR(100) NOT NULL,
-  `email` VARCHAR(100) NOT NULL,
-  `papel` VARCHAR(100) NOT NULL DEFAULT 'usuario'
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 24
-DEFAULT CHARACTER SET = utf8
-
-INSERT INTO `mvcd`.`usuario` (`nome`, `senha`, `email`, `papel`) VALUES ('admin', '123', 'admin@admin', 'admin');
-INSERT INTO `mvcd`.`usuario` (`nome`, `senha`, `email`, `papel`) VALUES ('usuario', '123', 'usuario@usuario', 'usuario');
+INSERT INTO usuario(nome, email, senha, papel) 
+VALUES
+("admin","admin@admin.com", "123", "admin"),
+("usuario","usuario@usuario.com", "123", "user");
