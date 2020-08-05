@@ -1,7 +1,7 @@
 <?php
 
 function conn() {
-    $cnx = mysqli_connect("localhost", "mysql", "qwe123", "mvcd");
+    $cnx = new PDO('sqlite:data.sqlite');
     if (!$cnx) die('Deu errado a conexao!');
     return $cnx;
 }

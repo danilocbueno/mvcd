@@ -6,10 +6,11 @@
         <link rel="stylesheet" href="./publico/css/app.css">
     </head>
     <body class="container">
+        <?php include 'cabecalho.php';?>
 
         <main class="container">
             <?php require $viewFilePath; ?>
         </main>
-
+        <?php include 'rodape.php';?>
     </body>
 </html>

@@ -3,9 +3,11 @@
 session_start();
 
 //arquivos obrigatorios do framework
-require_once 'biblioteca/mysqli.php';
+require_once 'biblioteca/db.php';
 require_once 'biblioteca/visao.php';
 require_once 'biblioteca/uteis.php';
+require_once 'biblioteca/alert.php';
+require_once 'biblioteca/acesso.php';
 
 require_once 'app.php'; //arquivo geral da aplicacao
 
